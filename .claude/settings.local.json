@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 15 npm run dev)",
+      "Bash(npm run *)",
+      "Bash(kill %1)",
+      "Bash(kill 27594)",
+      "Bash(npm --prefix /Users/tika/master-dog-adoption-quiz run dev)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(echo \"PID: $!\")",
+      "Read(//tmp/**)",
+      "Bash(vercel --version)",
+      "Bash(git -C /Users/tika/master-dog-adoption-quiz status)",
+      "Bash(npm install *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

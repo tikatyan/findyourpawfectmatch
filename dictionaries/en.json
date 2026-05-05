@@ -1,0 +1,21 @@
+{
+  "header": {
+    "find_perfect_match": "Find Your Perfect Match",
+    "find_local_shelter": "Find Local Shelter"
+  },
+  "find_shelter_page": {
+    "back_to_quiz": "Back to Quiz",
+    "hero_title": "Visit Your Local Heroes! 🏠",
+    "hero_description": "These amazing shelters and rescues across Indonesia work tirelessly to save pups every day. Whenever you can, consider to volunteer or drop by for a visit.",
+    "submit_shelter_text_part1": "If you know other shelters or rescues that should also be featured, help us expand our list by filling this",
+    "submit_shelter_text_link": "form",
+    "search_placeholder": "Search by name, region, or specialty...",
+    "filter_by_region": "Filter by Region",
+    "all_regions": "All Regions",
+    "no_shelters_found": "No shelters found matching your criteria. Try adjusting your search or filters."
+  },
+  "footer": {
+    "made_by_prefix": "Made with love and lots of treatos by",
+    "all_rights_reserved": "All rights reserved."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "header": {
+    "find_perfect_match": "Cari Anjing yang Cocok",
+    "find_local_shelter": "Cari Shelter di Sekitarmu"
+  },
+  "find_shelter_page": {
+    "back_to_quiz": "Kembali ke Kuis",
+    "hero_title": "Kenalan sama Shelter 🏠",
+    "hero_description": "Shelter dan rescue team dari seluruh Indonesia ini terus berusaha untuk menyelamatkan anjing terlantar (atau yang ditelantarkan) setiap hari. Kapan pun kamu bisa, yuk bantu atau berkunjung ke tempat mereka!",
+    "submit_shelter_text_part1": "Kalau kamu tahu ada shelter/rescue team lain yang bisa ditambahkan ke daftar ini, kasih tahu kami dengan mengisi",
+    "submit_shelter_text_link": "formulir ini.",
+    "search_placeholder": "Cari berdasarkan nama, wilayah, atau spesialisasi...",
+    "filter_by_region": "Filter Berdasarkan Wilayah",
+    "all_regions": "Semua Wilayah",
+    "no_shelters_found": "Tidak ada shelter yang cocok dengan kriteria kamu. Coba sesuaikan pencarian kembali."
+  },
+  "footer": {
+    "made_by_prefix": "Dibuat dengan penuh cinta dan banyak treatos oleh",
+    "all_rights_reserved": "Hak cipta dilindungi."
+  }
+}
