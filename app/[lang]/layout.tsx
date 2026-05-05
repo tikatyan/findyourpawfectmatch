@@ -2,7 +2,6 @@ import type React from "react"
 import { SiteHeader } from "@/components/site-header"
 import { getDictionary } from "./dictionaries"
 import Link from "next/link"
-import { Analytics } from "@vercel/analytics/react" // [^vercel_knowledge_base]
 import { Suspense } from "react"
 
 export const dynamicParams = false
@@ -46,7 +45,6 @@ export default async function LocaleLayout({
             </p>
           </div>
         </footer>
-        <Analytics />
       </Suspense>
     </>
   )
