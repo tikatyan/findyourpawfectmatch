@@ -1,0 +1,5 @@
+pbpaste > mobile.patch
+git apply mobile.patch
+git add -A
+git commit -m "Make layout mobile-first and fix transparent shelter filter dropdown"
+git push -u origin claude/mobile-first-filter-fix-NS368

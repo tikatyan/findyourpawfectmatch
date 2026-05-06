@@ -96,20 +96,20 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-orange-50 to-green-50">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-4 md:py-8">
           <div className="max-w-4xl mx-auto">
             <Card className={`border-2 rounded-2xl ${resultData.color} shadow-lg`}>
-              <CardContent className="p-8">
-                <div className="mb-6">
+              <CardContent className="p-4 md:p-8">
+                <div className="mb-4 md:mb-6">
                   <img
                     src={resultData.image || "/placeholder.png"}
                     alt={resultData.title}
-                    className="w-full h-64 md:h-80 object-cover rounded-xl shadow-md"
+                    className="w-full h-48 md:h-64 lg:h-80 object-cover rounded-xl shadow-md"
                   />
                 </div>
 
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">{resultData.title}</h2>
-                <p className="text-lg mb-8 leading-relaxed text-center max-w-3xl mx-auto">{resultData.description}</p>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 text-center">{resultData.title}</h2>
+                <p className="text-base md:text-lg mb-6 md:mb-8 leading-relaxed text-center max-w-3xl mx-auto">{resultData.description}</p>
 
                 {result === "notReady" ? (
                   <div className="space-y-8">
@@ -237,14 +237,14 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-green-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-4 md:py-8">
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">{content.quizTitle}</h1>
-            <p className="text-lg text-gray-600 leading-relaxed">{content.description}</p>
+          <div className="text-center mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4">{content.quizTitle}</h1>
+            <p className="text-base md:text-lg text-gray-600 leading-relaxed">{content.description}</p>
           </div>
 
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm text-gray-600">
                 {lang === "en" ? "Question" : "Pertanyaan"} {currentQuestion + 1}{" "}
@@ -263,16 +263,16 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
           </div>
 
           <Card className="border-0 shadow-lg rounded-2xl bg-white">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">{question.question}</h2>
-              {question.subtitle && <p className="text-gray-600 text-center mb-6 italic">{question.subtitle}</p>}
+            <CardContent className="p-4 md:p-8">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2 text-center">{question.question}</h2>
+              {question.subtitle && <p className="text-gray-600 text-center mb-4 md:mb-6 italic text-sm md:text-base">{question.subtitle}</p>}
 
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {question.options.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => handleAnswer(question.id, option.value)}
-                    className={`w-full p-4 text-left rounded-xl border-2 transition-all hover:shadow-md ${
+                    className={`w-full p-3 md:p-4 text-left rounded-xl border-2 transition-all hover:shadow-md ${
                       answers[question.id] === option.value
                         ? "border-orange-500 bg-orange-50"
                         : "border-gray-200 hover:border-orange-300"
@@ -283,7 +283,7 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
                 ))}
               </div>
 
-              <div className="flex justify-between mt-8">
+             <div className="flex justify-between mt-6 md:mt-8">
                 <Button
                   onClick={prevQuestion}
                   disabled={currentQuestion === 0}

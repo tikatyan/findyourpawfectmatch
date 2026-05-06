@@ -26,7 +26,7 @@ export default async function LocaleLayout({
         <SiteHeader lang={lang} dict={dict} />
         {children}
         {/* Global Footer */}
-        <footer className="bg-white shadow-inner border-t border-orange-100 mt-12 py-8">
+        <footer className="bg-white shadow-inner border-t border-orange-100 mt-8 md:mt-12 py-6 md:py-8">
           <div className="container mx-auto px-4 text-center text-gray-500 text-sm">
             <p>
               {dict.footer.made_by_prefix}{" "}
