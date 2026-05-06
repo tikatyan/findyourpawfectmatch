@@ -103,7 +103,7 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-green-50 flex flex-col">
       {/* ---------- Main ---------- */}
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 py-4 md:py-8 flex-grow">
         {/* Back button */}
         <Link href={`/${lang}`}>
           <Button variant="ghost" className="mb-6 text-orange-500 hover:text-orange-600 hover:bg-orange-50">
@@ -113,17 +113,17 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
         </Link>
 
         {/* Hero */}
-        <section className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">{dict.find_shelter_page.hero_title}</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <section className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4">{dict.find_shelter_page.hero_title}</h2>
+          <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             {dict.find_shelter_page.hero_description}
           </p>
         </section>
 
         {/* Submit New Shelter Section (Moved to Top) */}
-        <section className="w-full max-w-3xl mx-auto p-4 md:p-5 shadow-md flex flex-col md:flex-row items-center gap-4 md:gap-6 mb-12 bg-neutral-50 opacity-100 rounded-3xl">
-          <Megaphone className="h-8 w-8 text-orange-500 flex-shrink-0" />
-          <p className="text-lg text-gray-700 leading-relaxed md:text-left text-center flex-grow">
+        <section className="w-full max-w-3xl mx-auto p-4 md:p-5 shadow-md flex flex-col md:flex-row items-center gap-4 md:gap-6 mb-8 md:mb-12 bg-neutral-50 opacity-100 rounded-3xl">
+          <Megaphone className="h-7 w-7 md:h-8 md:w-8 text-orange-500flex-shrink-0" />
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed md:text-left text-center flex-grow">
             {dict.find_shelter_page.submit_shelter_text_part1}{" "}
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSdyhusZgdZDMsFdy78EY-S_Q41X9bkroN51x82IyA8d6207hQ/viewform?usp=sharing&ouid=111197092728238406889"
@@ -151,10 +151,10 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
             />
           </div>
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>
-            <SelectTrigger className="w-full sm:w-[180px] rounded-full border border-gray-300 shadow-sm">
+            <SelectTrigger className="w-full sm:w-[180px] rounded-full border border-gray-300 shadow-sm bg-white">
               <SelectValue placeholder={dict.find_shelter_page.filter_by_region} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border border-gray-200 shadow-lg">
               {uniqueRegions.map((region) => (
                 <SelectItem key={region} value={region}>
                   {region === "all" ? dict.find_shelter_page.all_regions : region}
@@ -165,24 +165,24 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
         </div>
 
         {/* Shelter list grouped by region */}
-        <section className="space-y-12">
+        <section className="space-y-8 md:space-y-12">
           {groupedAndSortedShelters.length > 0 ? (
             groupedAndSortedShelters.map((group) => (
               <div key={group.regionName}>
                 <h3 className="text-2xl font-bold text-gray-800 flex items-center mb-6">
-                  <MapPin className="h-6 w-6 text-orange-500 mr-2" />
+                  <MapPin className="h-5 w-5 md:h-6 md:w-6 text-orange-500 mr-2" />
                   {group.regionName}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {group.shelters.map((shelter, index) => (
                     <Card
                       key={index}
                       className="border-0 shadow-lg hover:shadow-xl transition-shadow rounded-2xl bg-white"
                     >
-                      <CardContent className="p-6 flex flex-col items-center text-center">
+                      <CardContent className="p-4 md:p-6 flex flex-col items-center text-center">
                         {/* Emoji representation */}
-                        <span className="text-5xl mb-4">{getShelterEmoji(shelter.shelter)}</span>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">{shelter.shelter}</h3>
+                        <span className="text-4xl md:text-5xl mb-3 md:mb-4">{getShelterEmoji(shelter.shelter)}</span>
+                        <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">{shelter.shelter}</h3>
 
                         <p className="flex items-center text-gray-600 text-sm mb-3">
                           <MapPin className="h-4 w-4 mr-1" />
