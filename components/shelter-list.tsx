@@ -106,7 +106,7 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
       <main className="container mx-auto px-4 py-4 md:py-8 flex-grow">
         {/* Back button */}
         <Link href={`/${lang}`}>
-          <Button variant="ghost" className="mb-6 text-orange-500 hover:text-orange-600 hover:bg-orange-50">
+          <Button variant="ghost" className="mb-4 md:mb-6 text-orange-500 hover:text-orange-600 hover:bg-orange-50">
             <ArrowLeft className="h-4 w-4 mr-2" />
             {dict.find_shelter_page.back_to_quiz}
           </Button>
@@ -122,7 +122,7 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
 
         {/* Submit New Shelter Section (Moved to Top) */}
         <section className="w-full max-w-3xl mx-auto p-4 md:p-5 shadow-md flex flex-col md:flex-row items-center gap-4 md:gap-6 mb-8 md:mb-12 bg-neutral-50 opacity-100 rounded-3xl">
-          <Megaphone className="h-7 w-7 md:h-8 md:w-8 text-orange-500flex-shrink-0" />
+          <Megaphone className="h-7 w-7 md:h-8 md:w-8 text-orange-500 flex-shrink-0" />
           <p className="text-base md:text-lg text-gray-700 leading-relaxed md:text-left text-center flex-grow">
             {dict.find_shelter_page.submit_shelter_text_part1}{" "}
             <a
@@ -169,7 +169,7 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
           {groupedAndSortedShelters.length > 0 ? (
             groupedAndSortedShelters.map((group) => (
               <div key={group.regionName}>
-                <h3 className="text-2xl font-bold text-gray-800 flex items-center mb-6">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center mb-4 md:mb-6">>
                   <MapPin className="h-5 w-5 md:h-6 md:w-6 text-orange-500 mr-2" />
                   {group.regionName}
                 </h3>
