@@ -169,7 +169,7 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
           {groupedAndSortedShelters.length > 0 ? (
             groupedAndSortedShelters.map((group) => (
               <div key={group.regionName}>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center mb-4 md:mb-6">>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center mb-4 md:mb-6">
                   <MapPin className="h-5 w-5 md:h-6 md:w-6 text-orange-500 mr-2" />
                   {group.regionName}
                 </h3>
