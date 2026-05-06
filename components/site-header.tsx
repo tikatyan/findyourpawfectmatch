@@ -22,8 +22,8 @@ export function SiteHeader({ lang, dict }: SiteHeaderProps) {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href={`/${lang}`} className="flex items-center space-x-2">
-            <img src="/images/adopt-logo.png" alt="Adopt Indonesian Dogs Logo" className="h-10 w-auto" />
-            <h1 className="text-2xl font-bold text-gray-800">Adopt Indonesian Dogs</h1>
+            <img src="/images/adopt-logo.png" alt="Adopt Indonesian Dogs Logo" className="h-8 md:h-10 w-auto" />
+            <h1 className="text-lg md:text-2xl font-bold text-gray-800">Adopt Indonesian Dogs</h1>
           </Link>
           
           {/* Desktop Navigation */}
