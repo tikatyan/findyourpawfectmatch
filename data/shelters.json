@@ -12,12 +12,6 @@
     "instagram": "https://www.instagram.com/pejatenshelter"
   },
   {
-    "shelter": "Animal Defenders Indonesia",
-    "region": "DKI Jakarta (national)",
-    "specialty": "Rescue–rehab–rehome; education and anti-cruelty campaigns",
-    "instagram": "https://www.instagram.com/animaldefendersindo"
-  },
-  {
     "shelter": "Garda Satwa Indonesia",
     "region": "Bogor - West Java",
     "specialty": "Animal welfare organization focusing on rescue, advocacy, and education.",
@@ -112,12 +106,6 @@
     "region": "Banten - Serang",
     "specialty": "Large dog shelter housing 1000+ rescued dogs; vaccination, sterilization, and adoption",
     "instagram": "https://www.instagram.com/rumah_singgah_tpp"
-  },
-  {
-    "shelter": "Yayasan Rumah Singgah CLOW",
-    "region": "Jawa Barat - Bogor",
-    "specialty": "Shelter rescuing and rehabilitating sick and abandoned dogs and cats",
-    "instagram": "https://www.instagram.com/rumahsinggahclow"
   },
   {
     "shelter": "Dogs Need Love (Sayangi Hewan Peliharaan)",
@@ -322,5 +310,77 @@
     "region": "Jawa Tengah - Semarang",
     "specialty": "Dog and cat rescue and shelter; adoption and rehoming",
     "instagram": "https://www.instagram.com/animals_hopeshelterindonesia"
+  },
+  {
+    "shelter": "Medan Animal Rescue (Yayasan MAR)",
+    "region": "Sumatera Utara - Medan",
+    "specialty": "Cat and dog rescue and shelter, established 2018",
+    "instagram": "https://www.instagram.com/medananimalrescue"
+  },
+  {
+    "shelter": "Medan Rescue Indonesia",
+    "region": "Sumatera Utara - Medan",
+    "specialty": "Street animal rescue including dogs in Medan",
+    "instagram": "https://www.instagram.com/medan.rescueid"
+  },
+  {
+    "shelter": "Toba Animal Friends",
+    "region": "Sumatera Utara - Samosir (Lake Toba)",
+    "specialty": "Dog and cat rehabilitation, spay/neuter and welfare education",
+    "instagram": "https://www.instagram.com/tobaanimalfriends"
+  },
+  {
+    "shelter": "Palembang Dog Shelter",
+    "region": "Sumatera Selatan - Palembang",
+    "specialty": "Dog shelter and adoption (Yayasan Rumah Perlindungan Guguk Palembang)",
+    "instagram": "https://www.instagram.com/palembang.dogshelter"
+  },
+  {
+    "shelter": "Pekanbaru Dog Lover",
+    "region": "Riau - Pekanbaru",
+    "specialty": "Dog rescue and shelter with adoption",
+    "instagram": "https://www.instagram.com/pekanbarudoglover"
+  },
+  {
+    "shelter": "Pawmise Shelter",
+    "region": "Kepulauan Riau - Batam",
+    "specialty": "Cat and dog rescue shelter",
+    "instagram": "https://www.instagram.com/pawmise.shelter"
+  },
+  {
+    "shelter": "Jambi Dog Lover",
+    "region": "Jambi - Jambi",
+    "specialty": "Dog rescue and rehoming (Yayasan Bintang Mas Sakti)",
+    "instagram": "https://www.instagram.com/jambidoglover"
+  },
+  {
+    "shelter": "Yayasan Sahabat Satwa Makassar",
+    "region": "Sulawesi Selatan - Makassar",
+    "specialty": "Foundation rescuing, rehabilitating and rehoming stray dogs; open adoptions",
+    "instagram": "https://www.instagram.com/ssmksr"
+  },
+  {
+    "shelter": "Animal Friends Manado Indonesia (AFMI)",
+    "region": "Sulawesi Utara - Manado",
+    "specialty": "Shelter rescuing dogs and cats from markets and streets; free adoptions",
+    "instagram": "https://www.instagram.com/animalfriendsmanadoindonesia"
+  },
+  {
+    "shelter": "Yayasan Balikpapan Animal Care",
+    "region": "Kalimantan Timur - Balikpapan",
+    "specialty": "Dog adopt, foster, donate, rescue and education",
+    "instagram": "https://www.instagram.com/balikpapananimalcare"
+  },
+  {
+    "shelter": "Komunitas Pencinta Anjing Samarinda",
+    "region": "Kalimantan Timur - Samarinda",
+    "specialty": "Dog lovers community promoting adopt-don't-shop and rehoming",
+    "instagram": "https://www.instagram.com/dogloverssamarinda"
+  },
+  {
+    "shelter": "Dog Lovers Papua (DLP)",
+    "region": "Papua",
+    "specialty": "Dog lovers community facilitating adoption and rehoming in Papua",
+    "instagram": "https://www.instagram.com/dogloverspapua"
   }
 ]
