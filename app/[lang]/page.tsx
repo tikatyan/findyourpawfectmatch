@@ -113,34 +113,18 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
 
                 {result === "notReady" ? (
                   <div className="space-y-8">
-                    <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-                      <div className="flex-1 bg-white/50 rounded-xl p-6">
-                        <h3 className="font-semibold mb-4 text-xl text-center md:text-left">
-                          {lang === "en" ? "Ways You Can Help Right Now:" : "Cara Kamu Bisa Bantu:"}
-                        </h3>
-                        <ul className="space-y-3">
-                          {resultData.characteristics.map((char, index) => (
-                            <li key={index} className="flex items-start">
-                              <span className="text-orange-500 mr-3 mt-1 flex-shrink-0 text-lg">•</span>
-                              <span className="text-sm leading-relaxed">{char}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="flex-1 bg-white/50 rounded-xl p-6">
-                        <h3 className="font-semibold mb-4 text-xl text-center md:text-left">
-                          {lang === "en" ? "Next Steps:" : "Langkah Selanjutnya:"}
-                        </h3>
-                        <ul className="space-y-3">
-                          {resultData.nextSteps.map((step, index) => (
-                            <li key={index} className="flex items-start">
-                              <span className="text-green-500 mr-3 mt-1 flex-shrink-0 text-lg">✓</span>
-                              <span className="text-sm leading-relaxed">{step}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div className="bg-white/50 rounded-xl p-6 max-w-2xl mx-auto">
+                      <h3 className="font-semibold mb-4 text-xl text-center md:text-left">
+                        {lang === "en" ? "Next Steps:" : "Langkah Selanjutnya:"}
+                      </h3>
+                      <ul className="space-y-3">
+                        {resultData.nextSteps.map((step, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-green-500 mr-3 mt-1 flex-shrink-0 text-lg">✓</span>
+                            <span className="text-sm leading-relaxed">{step}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 ) : (
