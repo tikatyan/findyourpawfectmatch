@@ -12,5 +12,8 @@ if (posthogKey) {
     // Enables autocapture plus automatic pageview/pageleave tracking on
     // client-side (SPA) route changes — correct for the Next.js App Router.
     defaults: "2025-05-24",
+    // Explicit: $pageleave powers bounce-rate analysis. (Already implied by the
+    // defaults above, but pinned here so it survives a defaults change.)
+    capture_pageleave: true,
   })
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { quizContent, type Language, type ResultKey } from "@/data/quiz"
-import { useState, use, useEffect } from "react"
+import { useState, use, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -31,6 +31,19 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
   }
 
   const nextQuestion = () => {
+    // Capture the answer the user committed to for this question. Fired on
+    // advance (not on selection) so changing your mind first isn't counted.
+    const selectedValue = answers[quizQuestions[currentQuestion].id]
+    const selectedOption = quizQuestions[currentQuestion].options.find(
+      (o) => o.value === selectedValue,
+    )
+    posthog.capture("quiz_answer_selected", {
+      question_number: currentQuestion + 1,
+      answer: selectedOption?.label ?? selectedValue,
+      answer_value: selectedValue,
+      language: lang,
+    })
+
     if (currentQuestion < quizQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     } else {
@@ -89,6 +102,9 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
 
   const restartQuiz = () => {
     posthog.capture("quiz_retake_clicked", { from_result: result, language: lang })
+    // Also emitted as a CTA so every result-page button is comparable in one
+    // breakdown; quiz_retake_clicked is kept for the existing dashboard tile.
+    posthog.capture("result_cta_clicked", { result, cta: "retake", language: lang })
 
     setCurrentQuestion(0)
     setAnswers({})
@@ -107,6 +123,39 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestion, showResult])
+
+  // Mirror quiz progress into a ref so the unload handler below always reads
+  // current values instead of the state captured when it was registered.
+  const quizProgress = useRef({ currentQuestion, showResult, started: false })
+  quizProgress.current = {
+    currentQuestion,
+    showResult,
+    started: currentQuestion > 0 || Object.keys(answers).length > 0,
+  }
+
+  // Fire when someone leaves mid-quiz (started but never reached a result).
+  // sendBeacon is used because normal XHR is routinely killed during unload.
+  useEffect(() => {
+    const handleUnload = () => {
+      const { currentQuestion: q, showResult: done, started } = quizProgress.current
+      if (!started || done) return
+      posthog.capture(
+        "quiz_abandoned",
+        { last_question_seen: q + 1, total_questions: quizQuestions.length, language: lang },
+        { transport: "sendBeacon" },
+      )
+    }
+
+    window.addEventListener("beforeunload", handleUnload)
+    // pagehide also covers mobile Safari / bfcache, where beforeunload often
+    // never fires — without it most mobile abandonment would go unrecorded.
+    window.addEventListener("pagehide", handleUnload)
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload)
+      window.removeEventListener("pagehide", handleUnload)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang])
 
   if (showResult && result) {
     const resultData = resultTypes[result]
@@ -212,6 +261,13 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
                   <Link href={`/${lang}/find-shelter`}>
                     <Button
                       variant="outline"
+                      onClick={() =>
+                        posthog.capture("result_cta_clicked", {
+                          result,
+                          cta: "find_shelter",
+                          language: lang,
+                        })
+                      }
                       className="border-2 border-orange-500 text-orange-500 hover:bg-orange-50 px-8 py-4 rounded-full font-semibold text-lg bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
                     >
                       {lang === "en" ? "Find Local Shelters" : "Cari Shelter Terdekat"}

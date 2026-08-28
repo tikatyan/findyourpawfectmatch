@@ -197,12 +197,20 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
                             href={shelter.instagram}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() =>
+                            onClick={() => {
                               posthog.capture("shelter_instagram_click", {
                                 shelter: shelter.shelter,
                                 region: shelter.region,
                               })
-                            }
+                              // Primary conversion. Instagram is currently the
+                              // only contact channel in the shelter data, so
+                              // contact_method is constant until others exist.
+                              posthog.capture("shelter_contact_clicked", {
+                                shelter_name: shelter.shelter,
+                                contact_method: "instagram",
+                                region: shelter.region,
+                              })
+                            }}
                             className="inline-flex items-center text-pink-600 hover:text-pink-700 text-sm font-medium mt-auto"
                           >
                             <Instagram className="h-4 w-4 mr-2" />
