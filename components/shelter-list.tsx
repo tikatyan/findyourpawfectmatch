@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import posthog from "posthog-js"
 
 // Define types for shelter data and dictionary
 interface Shelter {
@@ -196,6 +197,12 @@ export function ShelterList({ sheltersData, dict, lang }: ShelterListProps) {
                             href={shelter.instagram}
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() =>
+                              posthog.capture("shelter_instagram_click", {
+                                shelter: shelter.shelter,
+                                region: shelter.region,
+                              })
+                            }
                             className="inline-flex items-center text-pink-600 hover:text-pink-700 text-sm font-medium mt-auto"
                           >
                             <Instagram className="h-4 w-4 mr-2" />

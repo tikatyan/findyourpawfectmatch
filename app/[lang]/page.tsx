@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import posthog from "posthog-js"
 
 export default function HomePage({ params }: { params: Promise<{ lang: Language }> }) {
   const { lang } = use(params)
@@ -79,6 +80,8 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
     } else {
       resultKey = "lowEnergy"
     }
+
+    posthog.capture("quiz_completed", { result: resultKey, language: lang })
 
     setResult(resultKey)
     setShowResult(true)
