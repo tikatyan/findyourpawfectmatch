@@ -1,7 +1,7 @@
 "use client"
 
 import { quizContent, type Language, type ResultKey } from "@/data/quiz"
-import { useState, use } from "react"
+import { useState, use, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -88,11 +88,25 @@ export default function HomePage({ params }: { params: Promise<{ lang: Language 
   }
 
   const restartQuiz = () => {
+    posthog.capture("quiz_retake_clicked", { from_result: result, language: lang })
+
     setCurrentQuestion(0)
     setAnswers({})
     setShowResult(false)
     setResult(null)
   }
+
+  // Fire one event per question reached so PostHog can build a step-by-step
+  // drop-off funnel (question 1 -> ... -> last question -> quiz_completed).
+  useEffect(() => {
+    if (showResult) return
+    posthog.capture("quiz_question_viewed", {
+      question_number: currentQuestion + 1,
+      total_questions: quizQuestions.length,
+      language: lang,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestion, showResult])
 
   if (showResult && result) {
     const resultData = resultTypes[result]

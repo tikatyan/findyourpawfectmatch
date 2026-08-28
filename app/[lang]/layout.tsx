@@ -1,5 +1,6 @@
 import type React from "react"
 import { SiteHeader } from "@/components/site-header"
+import { PostHogLanguage } from "@/components/posthog-language"
 import { getDictionary } from "./dictionaries"
 import Link from "next/link"
 import { Suspense } from "react"
@@ -23,6 +24,7 @@ export default async function LocaleLayout({
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
+        <PostHogLanguage lang={lang} />
         <SiteHeader lang={lang} dict={dict} />
         {children}
         {/* Global Footer */}
