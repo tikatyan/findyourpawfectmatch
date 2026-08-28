@@ -1,9 +1,10 @@
 import posthog from "posthog-js"
 
 // Next.js (15.3+) automatically loads this file on the client.
-// PostHog only initializes when a public key is configured, so local/dev
-// runs without a key are a no-op rather than an error.
-const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
+// The project key is public (ingest-only, safe to ship in the client bundle),
+// so it's baked in as a default; NEXT_PUBLIC_POSTHOG_KEY overrides it if set.
+const posthogKey =
+  process.env.NEXT_PUBLIC_POSTHOG_KEY ?? "phc_vqfyi2jbKudzj9nm4UdoWAaRPaEbHkDbf34PHcCybH5W"
 
 if (posthogKey) {
   posthog.init(posthogKey, {
