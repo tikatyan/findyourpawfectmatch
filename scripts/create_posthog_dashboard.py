@@ -77,14 +77,19 @@ def events_node(event, math="total", properties=None):
     return node
 
 
-def trends(event, math="total", breakdown=None, display=None):
+def trends(event, math="total", breakdown=None, display=None, breakdown_limit=None):
     source = {
         "kind": "TrendsQuery",
         "series": [events_node(event, math=math)],
         "dateRange": {"date_from": DATE_FROM},
     }
     if breakdown:
+        # PostHog defaults to the top 25 breakdown values and lumps the rest
+        # into "Other". Raise the cap where the real cardinality is higher
+        # (e.g. 74 shelters) so nothing silently disappears into that bucket.
         source["breakdownFilter"] = {"breakdown": breakdown, "breakdown_type": "event"}
+        if breakdown_limit:
+            source["breakdownFilter"]["breakdown_limit"] = breakdown_limit
     if display:
         source["trendsFilter"] = {"display": display}
     return {"kind": "InsightVizNode", "source": source}
@@ -115,6 +120,19 @@ def hogql(sql):
     return {"kind": "DataTableNode", "source": {"kind": "HogQLQuery", "query": sql}}
 
 
+ANSWERS_SQL = """
+SELECT
+  toInt(properties.question_number) AS question,
+  properties.answer                 AS answer,
+  properties.language               AS language,
+  count()                           AS times_chosen
+FROM events
+WHERE event = 'quiz_answer_selected'
+  AND timestamp > now() - INTERVAL 30 DAY
+GROUP BY question, answer, language
+ORDER BY question ASC, times_chosen DESC
+"""
+
 BOUNCE_RATE_SQL = """
 SELECT
   round(100.0 * countIf(pageviews = 1) / nullif(count(), 0), 1) AS bounce_rate_pct,
@@ -140,18 +158,22 @@ INSIGHTS = [
     {"name": "Visitors by country", "query": trends(
         "$pageview", math="dau", breakdown="$geoip_country_code", display="WorldMap")},
     {"name": "Shelter Instagram clicks (top shelters)", "query": trends(
-        "shelter_instagram_click", breakdown="shelter", display="ActionsTable")},
+        "shelter_instagram_click", breakdown="shelter", display="ActionsTable",
+        breakdown_limit=100)},
     # --- added with the second tracking batch ---
     {"name": "Total visitors", "query": trends(
         "$pageview", math="dau", display="BoldNumber")},
     {"name": "Where people abandon the quiz", "query": trends(
         "quiz_abandoned", breakdown="last_question_seen", display="ActionsBarValue")},
-    {"name": "Answers chosen (all questions)", "query": trends(
-        "quiz_answer_selected", breakdown="answer", display="ActionsTable")},
+    # A Trends breakdown here would hit the top-25 cap (~10 questions x ~4
+    # options x 2 languages), dumping the rest into "Other". HogQL returns the
+    # full distribution, grouped per question so it's actually readable.
+    {"name": "Answers chosen (per question)", "query": hogql(ANSWERS_SQL)},
     {"name": "Result CTA clicks by button", "query": trends(
         "result_cta_clicked", breakdown="cta", display="ActionsBarValue")},
     {"name": "Shelter contact clicks (primary conversion)", "query": trends(
-        "shelter_contact_clicked", breakdown="shelter_name", display="ActionsTable")},
+        "shelter_contact_clicked", breakdown="shelter_name", display="ActionsTable",
+        breakdown_limit=100)},
     {"name": "Bounce rate % (last 30d)", "query": hogql(BOUNCE_RATE_SQL)},
 ]
 
@@ -170,22 +192,35 @@ else:
     dash_id = dash["id"]
     print(f"Created dashboard #{dash_id}")
 
-# Skip tiles already present (so re-running is safe).
+# Map existing tile name -> insight id, so re-running UPDATES tiles in place
+# rather than skipping them (otherwise query fixes would never be applied).
 existing_tiles = api("GET", f"{BASE}/dashboards/{dash_id}/")
-existing_names = {
-    (t.get("insight") or {}).get("name")
-    for t in existing_tiles.get("tiles", [])
-}
+by_name = {}
+for t in existing_tiles.get("tiles", []):
+    ins = t.get("insight") or {}
+    if ins.get("name") and not ins.get("deleted"):
+        by_name[ins["name"]] = ins["id"]
+
+# Tiles from earlier versions of this script that have since been renamed or
+# replaced; removed so the dashboard doesn't accumulate stale duplicates.
+RETIRED_TILES = ["Answers chosen (all questions)"]
+
+for old_name in RETIRED_TILES:
+    if old_name in by_name:
+        api("PATCH", f"{BASE}/insights/{by_name[old_name]}/", {"deleted": True})
+        print(f"  - removed outdated tile: {old_name}")
 
 for spec in INSIGHTS:
-    if spec["name"] in existing_names:
-        print(f"  = tile already exists: {spec['name']}")
-        continue
-    insight = api("POST", f"{BASE}/insights/", {
-        "name": spec["name"],
-        "query": spec["query"],
-        "dashboards": [dash_id],
-    })
-    print(f"  + tile: {spec['name']} (insight #{insight['id']})")
+    if spec["name"] in by_name:
+        insight_id = by_name[spec["name"]]
+        api("PATCH", f"{BASE}/insights/{insight_id}/", {"query": spec["query"]})
+        print(f"  ~ updated tile: {spec['name']} (insight #{insight_id})")
+    else:
+        insight = api("POST", f"{BASE}/insights/", {
+            "name": spec["name"],
+            "query": spec["query"],
+            "dashboards": [dash_id],
+        })
+        print(f"  + tile: {spec['name']} (insight #{insight['id']})")
 
 print(f"\nDone. Open it at: {HOST}/project/{PROJECT_ID}/dashboard/{dash_id}")

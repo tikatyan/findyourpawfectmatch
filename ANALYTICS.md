@@ -1,9 +1,20 @@
 # Analytics (PostHog)
 
 PostHog is initialized in `instrumentation-client.ts` (autocapture + SPA
-pageviews/pageleaves). The `language` super property (`en`/`id`) is attached to
-every event via `components/posthog-language.tsx`, and visitor country is added
-automatically by PostHog GeoIP (`$geoip_country_code` / `$geoip_country_name`).
+pageviews/pageleaves). Visitor country is added automatically by PostHog GeoIP
+(`$geoip_country_code` / `$geoip_country_name`).
+
+### `language` (en/id)
+
+Attached to **every** event by the `before_send` hook in
+`instrumentation-client.ts`, which reads the locale from the URL path.
+
+This deliberately does *not* use a React effect / `posthog.register()`.
+`posthog.init()` captures the session's first `$pageview` immediately, before
+any component mounts, so an effect-based approach set the property too late and
+that first pageview arrived with no `language` — which PostHog then displayed
+as **"Other (no value)"** in breakdowns. Reading from the URL at send time also
+keeps the value correct when a user switches locale mid-session.
 
 ## Custom events
 
@@ -48,8 +59,21 @@ python3 scripts/create_posthog_dashboard.py
 
 Tiles created (12): quiz completion funnel (Q1→last→result), results by type,
 language split, retake clicks, visitors by country (world map), top shelters by
-Instagram click, total visitors, where people abandon the quiz, answers chosen,
-result CTA clicks by button, shelter contact clicks, and bounce rate.
+Instagram click, total visitors, where people abandon the quiz, answers chosen
+per question, result CTA clicks by button, shelter contact clicks, and bounce
+rate.
 
-Re-running the script is safe: it reuses the dashboard of the same name and
-skips tiles that already exist, so it only adds what's missing.
+Re-running the script is safe and is how you apply changes: it reuses the
+dashboard of the same name, **updates** existing tiles in place, adds missing
+ones, and deletes tiles listed in `RETIRED_TILES`.
+
+### Breakdown cardinality
+
+PostHog Trends breakdowns only show the top 25 values and bucket the rest into
+"Other". Two places exceed that:
+
+- **Shelter tiles** (74 shelters) — raised via `breakdown_limit=100`.
+- **Quiz answers** (~10 questions × ~4 options × 2 languages) — a Trends
+  breakdown is the wrong tool here, so that tile uses a HogQL query returning
+  the full distribution grouped by question. An "Other" bucket on that tile
+  never meant free-text answers; the quiz is entirely multiple-choice.
